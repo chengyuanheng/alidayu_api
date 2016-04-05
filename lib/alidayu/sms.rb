@@ -15,9 +15,13 @@ module Alidayu
         params[:sms_type] = 'normal'
         params[:sms_free_sign_name] = params.delete(:sign_name) || Alidayu.config.sign_name
         if params[:params].is_a? Hash
-          sms_param = params[:params].to_json
+          # 阿里大鱼的JSON参数接受字符串值。例如{"code":"123456"}，不接收{"code":123456}
+          sms_param = params[:params]
+          sms_param.each do |k,v|
+            sms_param[k] = v.to_s
+          end
           params.delete(:params)
-          params[:sms_param] = sms_param
+          params[:sms_param] = sms_param.to_json
         end
         params[:rec_num] = params.delete(:mobiles)
         params[:sms_template_code] = params.delete(:template_code)
