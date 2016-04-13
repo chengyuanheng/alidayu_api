@@ -15,7 +15,7 @@ alidayu api for ruby
 添加下面的代码到Gemfile中:
 
 ```ruby
-gem 'alidayu_api', '~> 0.0.1', require: "alidayu"
+gem 'alidayu_api', require: "alidayu"
 ```
 
 然后执行:
@@ -39,7 +39,26 @@ Alidayu.setup do |config|
 end
 ```
 
-短信发送模板请自行根据需求定义
+短信发送模板请自行根据需求定义，例如：
+
+`config/alidayu_config.yml`
+
+```ruby
+defaults: &defaults
+  server: "https://eco.taobao.com/router/rest"
+  app_key: "1234"
+  app_secret: "1234"
+  sign_name: "大鱼测试"
+  sms_template:
+    # 注册验证码：您的验证码为${code}，有效期${time}。
+    registration: "SMS_7237529"
+development:
+  <<: *defaults
+test:
+  <<: *defaults
+production:
+  <<: *defaults
+```
 	
 ### 短信发送
 
